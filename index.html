@@ -41,36 +41,77 @@
           autoDisplay: false
         }, 'google_translate_element');
       }
+      
+      // Custom language selector function
+      function changeLanguage(lang) {
+        // For "English", we need to show original
+        if (lang === 'en') {
+          // Try to restore original language
+          var restoreLink = document.querySelector('.goog-te-banner-frame');
+          if (restoreLink) {
+            var innerDoc = restoreLink.contentDocument || restoreLink.contentWindow.document;
+            var restoreButton = innerDoc.querySelector('.goog-te-banner-content button');
+            if (restoreButton) restoreButton.click();
+          }
+          // Fallback: set cookie to remove translation
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
+          location.reload();
+          return;
+        }
+        
+        // Set translation cookie and reload
+        var langCode = '/en/' + lang;
+        document.cookie = "googtrans=" + langCode + "; path=/;";
+        document.cookie = "googtrans=" + langCode + "; path=/; domain=." + window.location.hostname;
+        location.reload();
+      }
+      
+      // Make function globally available
+      window.changeLanguage = changeLanguage;
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
-      /* Style Google Translate dropdown */
-      .goog-te-gadget { font-family: inherit !important; }
-      .goog-te-gadget-simple { 
-        background-color: #f8f9fa !important; 
-        border: 1px solid #dee2e6 !important; 
-        border-radius: 6px !important;
-        padding: 6px 12px !important;
-        font-size: 14px !important;
+      /* Hide original Google Translate widget */
+      #google_translate_element { 
+        display: none !important; 
+      }
+      
+      /* Custom language selector styles */
+      .custom-lang-select {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
         cursor: pointer;
+        transition: all 0.2s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 30px;
       }
-      .goog-te-gadget-simple:hover {
-        background-color: #e9ecef !important;
+      .custom-lang-select:hover {
+        background-color: #e9ecef;
+        border-color: #adb5bd;
       }
-      .goog-te-menu-value span { color: #333 !important; }
-      .goog-te-menu-value span:first-child { font-weight: 500; }
-      /* Hide the Google Translate top bar but keep dropdown visible */
+      .custom-lang-select:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+      }
+      
+      /* Hide Google Translate top bar */
       .goog-te-banner-frame.skiptranslate { display: none !important; }
       body { top: 0 !important; }
-      .goog-te-gadget img { display: none !important; }
-      /* Hide "Powered by Google" text */
-      .goog-te-gadget > span { display: none !important; }
-      #google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
-        display: flex !important;
-        align-items: center !important;
-      }
+      .VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; }
+      .goog-te-gadget { display: none !important; }
     </style>
-    <script type="module" crossorigin src="/assets/index-uDrowsBU.js"></script>
+    <script type="module" crossorigin src="/assets/index-C8h5Yy-B.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-xtlnNqWW.css">
   </head>
   <body>
