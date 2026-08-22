@@ -1,10 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="CCSp1RNSTtJaBf5n29ubsoCsUWmuHcp3jPlkWMrmlm8" />
     <link rel="icon" type="image/svg+xml" href="/favicon1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Primary Meta Tags -->
     <title>Aurora Medical Center | Family Medicine in El Monte, CA</title>
@@ -79,7 +83,6 @@
     <meta name="ICBM" content="34.0686, -118.0276" />
     
     <!-- Single Page Apps for GitHub Pages -->
-    <!-- https://github.com/rafgraph/spa-github-pages -->
     <script type="text/javascript">
       (function(l) {
         if (l.search[1] === '/') {
@@ -93,7 +96,7 @@
       }(window.location))
     </script>
     
-    <!-- Google Analytics (optional) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_ID"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -113,79 +116,34 @@
         }, 'google_translate_element');
       }
       
-      // Custom language selector function
       function changeLanguage(lang) {
-        // For "English", we need to show original
         if (lang === 'en') {
-          // Try to restore original language
           var restoreLink = document.querySelector('.goog-te-banner-frame');
           if (restoreLink) {
             var innerDoc = restoreLink.contentDocument || restoreLink.contentWindow.document;
             var restoreButton = innerDoc.querySelector('.goog-te-banner-content button');
             if (restoreButton) restoreButton.click();
           }
-          // Fallback: set cookie to remove translation
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
           location.reload();
           return;
         }
         
-        // Set translation cookie and reload
         var langCode = '/en/' + lang;
         document.cookie = "googtrans=" + langCode + "; path=/;";
         document.cookie = "googtrans=" + langCode + "; path=/; domain=." + window.location.hostname;
         location.reload();
       }
       
-      // Make function globally available
       window.changeLanguage = changeLanguage;
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <style>
-      /* Hide original Google Translate widget */
-      #google_translate_element { 
-        display: none !important; 
-      }
-      
-      /* Custom language selector styles */
-      .custom-lang-select {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 6px 12px;
-        font-size: 14px;
-        font-weight: 500;
-        color: #333;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        appearance: none;
-        -webkit-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 10px center;
-        padding-right: 30px;
-      }
-      .custom-lang-select:hover {
-        background-color: #e9ecef;
-        border-color: #adb5bd;
-      }
-      .custom-lang-select:focus {
-        outline: none;
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
-      }
-      
-      /* Hide Google Translate top bar */
-      .goog-te-banner-frame.skiptranslate { display: none !important; }
-      body { top: 0 !important; }
-      .VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; }
-      .goog-te-gadget { display: none !important; }
-    </style>
-    <script type="module" crossorigin src="/assets/index-C-Q_voCL.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-LKg-alcE.css">
+    <script type="module" crossorigin src="/assets/index-DbhcAGWJ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-KPstoWek.css">
   </head>
   <body>
+    <div id="google_translate_element"></div>
     <div id="root"></div>
   </body>
 </html>
