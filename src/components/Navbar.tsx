@@ -2,38 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Navbar as BsNavbar, Nav, Container, Badge } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { FaClock, FaCalendarDay } from 'react-icons/fa6';
-import { useSchedule } from '../context/ScheduleContext';
+import { useContent } from '../context/ContentContext';
 import { getCurrentLanguage } from '../utils/language';
-import { HolidayStatus } from '../types/schedule';
-
-export const getSpecialScheduleStatus = (): HolidayStatus => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const dec15 = new Date(year, 11, 15);
-  const dec23 = new Date(year, 11, 23, 23, 59);
-  const dec24 = new Date(year, 11, 24);
-  const jan1 = new Date(year + 1, 0, 1, 23, 59);
-  const feb16 = new Date(2026, 1, 16);
-  const feb18 = new Date(2026, 1, 18, 23, 59);
-
-  if (now >= feb16 && now <= feb18) {
-    return { isSpecial: true, hours: "Closed", message: "Clinic Closure" };
-  }
-  if (now >= dec15 && now <= dec23) {
-    return { isSpecial: true, hours: "2:00 PM – 6:00 PM", message: "Holiday Hours" };
-  }
-  if (now >= dec24 && now <= jan1) {
-    return { isSpecial: true, hours: "Closed", message: "Holiday Closure" };
-  }
-
-  return { isSpecial: false, hours: null, message: null };
-};
 
 export const Navbar: React.FC = () => {
-  const { todayHours } = useSchedule();
+  const { todayHours, holiday } = useContent();
   const todayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
-  const specialStatus = getSpecialScheduleStatus();
-  const displayHours = specialStatus.isSpecial ? specialStatus.hours : (todayHours || "Closed");
+  
+  const isSpecial = holiday.active;
+  const displayHours = isSpecial ? (holiday.hours || "Closed") : (todayHours || "Closed");
+  const displayMessage = isSpecial ? holiday.title : `${todayName}:`;
+
   const [currentLang, setCurrentLang] = useState<string>(getCurrentLanguage());
   const location = useLocation();
 
@@ -113,18 +92,18 @@ export const Navbar: React.FC = () => {
           </Nav>
 
           <div className="d-flex flex-wrap align-items-center gap-3 mt-2 mt-lg-0">
-            {/* Hours Badge Pill */}
+            {/* Hours / Notice Badge Pill */}
             <div className="d-flex align-items-center bg-light border rounded-pill px-3 py-1 shadow-sm">
-              {specialStatus.isSpecial ? (
+              {isSpecial ? (
                 <FaCalendarDay className="text-warning me-2" size={14} />
               ) : (
                 <FaClock className="text-primary me-2" size={14} />
               )}
               <div className="small fw-semibold text-dark me-2" style={{ fontSize: "12.5px" }}>
-                {specialStatus.isSpecial ? specialStatus.message : `${todayName}:`}
+                {displayMessage}
               </div>
               <Badge
-                bg={displayHours === "Closed" ? "danger" : "success"}
+                bg={displayHours.toLowerCase().includes("closed") ? "danger" : "success"}
                 className="rounded-pill px-2 py-1"
                 style={{ fontSize: "11px" }}
               >

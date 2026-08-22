@@ -17,10 +17,10 @@ import {
   FaUserDoctor,
   FaUserCheck,
 } from 'react-icons/fa6';
-import { useSchedule } from '../context/ScheduleContext';
-import { getSpecialScheduleStatus } from '../components/Navbar';
+import { useContent } from '../context/ContentContext';
+import { IconType } from 'react-icons';
 
-export const services = [
+const services = [
   {
     icon: FaChild,
     bg: "#eff6ff",
@@ -65,23 +65,32 @@ export const services = [
   },
 ];
 
-export const providers = [
-  { name: "Dr. Yong Wang", role: "Family Medicine", icon: FaUserDoctor, color: "#2563eb", bg: "#eff6ff" },
-  { name: "Dr. May Wang", role: "Pediatrics", icon: FaChild, color: "#0284c7", bg: "#f0f9ff" },
-  { name: "Dr. Ryan Wang", role: "Internal Medicine", icon: FaUserGroup, color: "#16a34a", bg: "#f0fdf4" },
-  { name: "NP Zin Aye", role: "Family Medicine", icon: FaHeartPulse, color: "#db2777", bg: "#fdf2f8" },
-];
-
-export const trustBadges = [
+const trustBadges = [
   { title: "Compassionate Care", subtitle: "Family-centered practice" },
   { title: "Multilingual Staff", subtitle: "EN, ES, ZH, VI spoken" },
   { title: "Convenient Location", subtitle: "Lower Azusa Rd, El Monte" },
   { title: "Comprehensive Services", subtitle: "Pediatrics to Geriatrics" },
 ];
 
+function getMemberIcon(iconName?: string): { icon: IconType; color: string; bg: string } {
+  switch (iconName?.toLowerCase()) {
+    case 'child':
+    case 'pediatrics':
+      return { icon: FaChild, color: "#0284c7", bg: "#f0f9ff" };
+    case 'group':
+    case 'internal':
+      return { icon: FaUserGroup, color: "#16a34a", bg: "#f0fdf4" };
+    case 'heart':
+    case 'geriatric':
+      return { icon: FaHeartPulse, color: "#db2777", bg: "#fdf2f8" };
+    case 'doctor':
+    default:
+      return { icon: FaUserDoctor, color: "#2563eb", bg: "#eff6ff" };
+  }
+}
+
 export const Home: React.FC = () => {
-  const specialStatus = getSpecialScheduleStatus();
-  const { schedule } = useSchedule();
+  const { schedule, holiday, team, announcements } = useContent();
   const todayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
   const daysOrder = [
@@ -97,16 +106,16 @@ export const Home: React.FC = () => {
   return (
     <div className="home-main">
       {/* Holiday Alert Banner */}
-      {specialStatus.isSpecial && (
+      {holiday.active && (
         <div className="bg-danger text-white py-2 text-center shadow-sm">
           <Container>
             <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
               <div className="d-flex align-items-center">
                 <FaTree className="me-2 fs-5" />
-                <span className="fw-bold">HOLIDAY SCHEDULE NOTICE</span>
+                <span className="fw-bold">{holiday.title.toUpperCase()}</span>
               </div>
               <div className="small">
-                <span>{specialStatus.message}: <strong>{specialStatus.hours}</strong></span>
+                <span>{holiday.message} <strong>{holiday.hours}</strong></span>
               </div>
             </div>
           </Container>
@@ -130,28 +139,32 @@ export const Home: React.FC = () => {
                 Aurora Medical Center provides high-quality primary care, pediatrics, and preventive health services for all generations in El Monte, California.
               </p>
 
-              {/* Providers Showcase */}
+              {/* Dynamic Medical Team Showcase */}
               <div className="mb-4">
                 <div className="small fw-bold text-uppercase text-muted mb-2" style={{ letterSpacing: "0.05em" }}>
                   Our Medical Team
                 </div>
                 <Row className="g-2">
-                  {providers.map((p, idx) => (
-                    <Col key={idx} xs={6} sm={6}>
-                      <div className="provider-chip d-flex align-items-center">
-                        <div
-                          className="rounded-circle d-flex align-items-center justify-content-center me-2 flex-shrink-0"
-                          style={{ width: "34px", height: "34px", backgroundColor: p.bg, color: p.color }}
-                        >
-                          <p.icon size={16} />
+                  {team.map((member, idx) => {
+                    const iconConfig = getMemberIcon(member.icon);
+                    const IconComponent = iconConfig.icon;
+                    return (
+                      <Col key={idx} xs={6} sm={6}>
+                        <div className="provider-chip d-flex align-items-center">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center me-2 flex-shrink-0"
+                            style={{ width: "34px", height: "34px", backgroundColor: iconConfig.bg, color: iconConfig.color }}
+                          >
+                            <IconComponent size={16} />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="fw-bold text-dark text-truncate" style={{ fontSize: "13.5px" }}>{member.name}</div>
+                            <div className="text-muted text-truncate" style={{ fontSize: "11.5px" }}>{member.role}</div>
+                          </div>
                         </div>
-                        <div className="overflow-hidden">
-                          <div className="fw-bold text-dark text-truncate" style={{ fontSize: "13.5px" }}>{p.name}</div>
-                          <div className="text-muted text-truncate" style={{ fontSize: "11.5px" }}>{p.role}</div>
-                        </div>
-                      </div>
-                    </Col>
-                  ))}
+                      </Col>
+                    );
+                  })}
                 </Row>
               </div>
 
@@ -268,7 +281,7 @@ export const Home: React.FC = () => {
         </Container>
       </section>
 
-      {/* Hours & Announcements Grid */}
+      {/* Hours & Dynamic Announcements Grid */}
       <section className="py-5 bg-white border-top border-bottom">
         <Container>
           <Row className="g-4">
@@ -318,24 +331,16 @@ export const Home: React.FC = () => {
               <Card className="premium-card p-4 h-100 bg-light">
                 <Card.Body>
                   <h4 className="fw-bold text-dark mb-3">Clinic Announcements</h4>
-                  <div className="bg-white p-3 rounded-3 border mb-3">
-                    <div className="d-flex align-items-center gap-2 mb-2">
-                      <Badge bg="warning" text="dark">Notice</Badge>
-                      <strong className="text-dark small">Clinic Closure – Feb 16-18</strong>
+                  {announcements.map((item, idx) => (
+                    <div className="bg-white p-3 rounded-3 border mb-3" key={idx}>
+                      <div className="d-flex align-items-center justify-content-between mb-2">
+                        <Badge bg="info">{item.badge}</Badge>
+                        {item.date && <small className="text-muted">{item.date}</small>}
+                      </div>
+                      <strong className="text-dark small d-block mb-1">{item.title}</strong>
+                      <p className="text-muted small mb-0">{item.content}</p>
                     </div>
-                    <p className="text-muted small mb-0">
-                      The clinic will be closed from Monday, Feb 16 through Wednesday, Feb 18, 2026. Regular office hours resume on Thursday, Feb 19.
-                    </p>
-                  </div>
-                  <div className="bg-white p-3 rounded-3 border">
-                    <div className="d-flex align-items-center gap-2 mb-2">
-                      <Badge bg="info">Information</Badge>
-                      <strong className="text-dark small">Walk-in Patients Welcome</strong>
-                    </div>
-                    <p className="text-muted small mb-0">
-                      Walk-ins are accommodated during regular business hours. For minimal wait times, please call ahead to check current scheduling.
-                    </p>
-                  </div>
+                  ))}
                 </Card.Body>
               </Card>
             </Col>

@@ -2,10 +2,10 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaLocationDot, FaPhone, FaFax, FaRoute } from 'react-icons/fa6';
-import { useSchedule } from '../context/ScheduleContext';
+import { useContent } from '../context/ContentContext';
 
 export const Footer: React.FC = () => {
-  const { schedule } = useSchedule();
+  const { schedule } = useContent();
   const todayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
   const daysOrder = [
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
             <div className="d-flex flex-column gap-2 text-white-50 small">
               <div className="d-flex align-items-center">
                 <FaPhone className="text-primary me-2" />
-                <a href="tel:+16265799541" className="text-white-50 text-decoration-none hover-white">
+                <a href="tel:+16265799541" className="text-white-50 text-decoration-none">
                   (626) 579-9541
                 </a>
               </div>
@@ -98,7 +98,7 @@ export const Footer: React.FC = () => {
               href="https://www.google.com/maps/dir//11245+Lower+Azusa+Rd+A,+El+Monte,+CA+91731"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white-50 text-decoration-none hover-white d-flex align-items-center gap-1"
+              className="text-white-50 text-decoration-none d-flex align-items-center gap-1"
             >
               <FaRoute className="text-primary" /> Directions
             </a>

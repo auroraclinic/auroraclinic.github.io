@@ -1,40 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
-import { FaUserDoctor, FaUserGroup, FaEnvelope, FaPenToSquare } from 'react-icons/fa6';
-
-export const jobOpenings = [
-  {
-    icon: FaUserDoctor,
-    title: "Physicians (MD/DO/NP/PA)",
-    specialties: [
-      "Internal Medicine",
-      "Geriatric Medicine",
-      "Family Medicine",
-      "Pediatrics",
-    ],
-    positions: "Multiple positions available",
-    color: "#2563eb",
-    bg: "#eff6ff",
-  },
-  {
-    icon: FaUserGroup,
-    title: "Medical Assistants",
-    specialties: ["Clinical Care", "Patient Triage", "EHR Documentation"],
-    positions: "Multiple positions available",
-    color: "#16a34a",
-    bg: "#f0fdf4",
-  },
-  {
-    icon: FaPenToSquare,
-    title: "Medical Scribes",
-    specialties: ["Medical Charting", "Physician Support"],
-    positions: "Multiple positions available",
-    color: "#0284c7",
-    bg: "#f0f9ff",
-  },
-];
+import { FaUserDoctor, FaEnvelope } from 'react-icons/fa6';
+import { useContent } from '../context/ContentContext';
 
 export const Careers: React.FC = () => {
+  const { careers } = useContent();
+
   return (
     <div className="careers-page py-5">
       <Container>
@@ -47,15 +18,15 @@ export const Careers: React.FC = () => {
         </div>
 
         <Row className="g-4 mb-5">
-          {jobOpenings.map((job, idx) => (
+          {careers.map((job, idx) => (
             <Col md={4} key={idx}>
               <Card className="premium-card h-100 p-4 text-center">
                 <Card.Body className="d-flex flex-column align-items-center">
                   <div
                     className="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                    style={{ width: "72px", height: "72px", backgroundColor: job.bg, color: job.color }}
+                    style={{ width: "72px", height: "72px", backgroundColor: "#eff6ff", color: "#2563eb" }}
                   >
-                    <job.icon size={32} />
+                    <FaUserDoctor size={32} />
                   </div>
                   <h4 className="fw-bold text-dark mb-3">{job.title}</h4>
                   <div className="d-flex flex-wrap justify-content-center gap-1 mb-3">
