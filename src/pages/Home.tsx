@@ -13,9 +13,7 @@ import {
   FaLocationDot,
   FaRoute,
   FaTree,
-  FaShieldHalved,
   FaUserDoctor,
-  FaUserCheck,
 } from 'react-icons/fa6';
 import { useContent } from '../context/ContentContext';
 import { IconType } from 'react-icons';
@@ -23,69 +21,56 @@ import { IconType } from 'react-icons';
 const services = [
   {
     icon: FaChild,
-    bg: "#eff6ff",
-    color: "#2563eb",
+    color: "text-primary",
     title: "Pediatric Care",
-    desc: "Child health checkups, immunizations, and growth tracking.",
+    desc: "Well-child checkups, growth monitoring, and routine immunizations.",
   },
   {
     icon: FaUserGroup,
-    bg: "#f0fdf4",
-    color: "#16a34a",
+    color: "text-success",
     title: "Adult Primary Care",
-    desc: "Comprehensive health evaluations and chronic disease management.",
+    desc: "Comprehensive physical exams, health screenings, and disease management.",
   },
   {
     icon: FaHeartPulse,
-    bg: "#fef2f2",
-    color: "#dc2626",
-    title: "Geriatric Medicine",
-    desc: "Specialized senior care, mobility plans, and wellness monitoring.",
+    color: "text-danger",
+    title: "Geriatric Care",
+    desc: "Specialized senior care, chronic condition monitoring, and wellness plans.",
   },
   {
     icon: FaVenus,
-    bg: "#fdf2f8",
-    color: "#db2777",
+    color: "text-info",
     title: "Women's Health",
-    desc: "Preventive screenings, reproductive care, and annual exams.",
+    desc: "Preventive screenings, wellness exams, and reproductive healthcare.",
   },
   {
     icon: FaClipboardList,
-    bg: "#f0f9ff",
-    color: "#0284c7",
-    title: "Annual Physicals",
-    desc: "Routine health checkups, employment physicals, and lab tests.",
+    color: "text-warning",
+    title: "Physical Exams",
+    desc: "Annual checkups, employment physicals, and diagnostic lab testing.",
   },
   {
     icon: FaSyringe,
-    bg: "#faf5ff",
-    color: "#9333ea",
+    color: "text-primary",
     title: "Vaccinations",
-    desc: "Routine immunizations, flu shots, and travel vaccines.",
+    desc: "Routine immunizations, annual flu shots, and travel vaccines.",
   },
 ];
 
-const trustBadges = [
-  { title: "Compassionate Care", subtitle: "Family-centered practice" },
-  { title: "Multilingual Staff", subtitle: "EN, ES, ZH, VI spoken" },
-  { title: "Convenient Location", subtitle: "Lower Azusa Rd, El Monte" },
-  { title: "Comprehensive Services", subtitle: "Pediatrics to Geriatrics" },
-];
-
-function getMemberIcon(iconName?: string): { icon: IconType; color: string; bg: string } {
+function getMemberIcon(iconName?: string): IconType {
   switch (iconName?.toLowerCase()) {
     case 'child':
     case 'pediatrics':
-      return { icon: FaChild, color: "#0284c7", bg: "#f0f9ff" };
+      return FaChild;
     case 'group':
     case 'internal':
-      return { icon: FaUserGroup, color: "#16a34a", bg: "#f0fdf4" };
+      return FaUserGroup;
     case 'heart':
     case 'geriatric':
-      return { icon: FaHeartPulse, color: "#db2777", bg: "#fdf2f8" };
+      return FaHeartPulse;
     case 'doctor':
     default:
-      return { icon: FaUserDoctor, color: "#2563eb", bg: "#eff6ff" };
+      return FaUserDoctor;
   }
 }
 
@@ -107,16 +92,11 @@ export const Home: React.FC = () => {
     <div className="home-main">
       {/* Holiday Alert Banner */}
       {holiday.active && (
-        <div className="bg-danger text-white py-2 text-center shadow-sm">
+        <div className="bg-warning bg-opacity-10 border-bottom border-warning py-2 text-center">
           <Container>
-            <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
-              <div className="d-flex align-items-center">
-                <FaTree className="me-2 fs-5" />
-                <span className="fw-bold">{holiday.title.toUpperCase()}</span>
-              </div>
-              <div className="small">
-                <span>{holiday.message} <strong>{holiday.hours}</strong></span>
-              </div>
+            <div className="d-flex justify-content-center align-items-center gap-2 small">
+              <FaTree className="text-warning" />
+              <strong>{holiday.title}:</strong> {holiday.message} <span>({holiday.hours})</span>
             </div>
           </Container>
         </div>
@@ -125,41 +105,31 @@ export const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <Container>
-          <Row className="align-items-center g-5">
+          <Row className="align-items-center g-4">
             <Col lg={6}>
-              <div className="stat-pill mb-3">
-                <FaShieldHalved className="me-2" /> Dedicated Primary Care Clinic
-              </div>
-              
-              <h1 className="display-4 fw-extrabold text-dark mb-3" style={{ letterSpacing: "-0.03em" }}>
-                Compassionate Care for Your Family
+              <h1 className="display-5 fw-bold text-dark mb-3">
+                Compassionate Healthcare for Your Entire Family
               </h1>
               
-              <p className="lead text-secondary mb-4" style={{ fontSize: "1.125rem", lineHeight: 1.6 }}>
-                Aurora Medical Center provides high-quality primary care, pediatrics, and preventive health services for all generations in El Monte, California.
+              <p className="lead text-muted mb-4" style={{ fontSize: "1.1rem" }}>
+                Aurora Medical Center provides primary care, pediatrics, and preventive medical services for patients of all ages in El Monte, California.
               </p>
 
-              {/* Dynamic Medical Team Showcase */}
+              {/* Medical Team */}
               <div className="mb-4">
-                <div className="small fw-bold text-uppercase text-muted mb-2" style={{ letterSpacing: "0.05em" }}>
+                <div className="small fw-bold text-uppercase text-muted mb-2" style={{ letterSpacing: "0.05em", fontSize: "11px" }}>
                   Our Medical Team
                 </div>
                 <Row className="g-2">
                   {team.map((member, idx) => {
-                    const iconConfig = getMemberIcon(member.icon);
-                    const IconComponent = iconConfig.icon;
+                    const IconComponent = getMemberIcon(member.icon);
                     return (
                       <Col key={idx} xs={6} sm={6}>
-                        <div className="provider-chip d-flex align-items-center">
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center me-2 flex-shrink-0"
-                            style={{ width: "34px", height: "34px", backgroundColor: iconConfig.bg, color: iconConfig.color }}
-                          >
-                            <IconComponent size={16} />
-                          </div>
+                        <div className="bg-white border rounded p-2 d-flex align-items-center me-2">
+                          <IconComponent className="text-primary me-2 flex-shrink-0" size={16} />
                           <div className="overflow-hidden">
-                            <div className="fw-bold text-dark text-truncate" style={{ fontSize: "13.5px" }}>{member.name}</div>
-                            <div className="text-muted text-truncate" style={{ fontSize: "11.5px" }}>{member.role}</div>
+                            <div className="fw-bold text-dark text-truncate small">{member.name}</div>
+                            <div className="text-muted text-truncate" style={{ fontSize: "11px" }}>{member.role}</div>
                           </div>
                         </div>
                       </Col>
@@ -170,58 +140,26 @@ export const Home: React.FC = () => {
 
               {/* Action Buttons */}
               <div className="d-flex flex-wrap gap-3">
-                <Button className="btn-primary-custom" href="tel:+16265799541">
+                <Button className="btn-primary-clean" href="tel:+16265799541">
                   <FaPhone className="me-2" /> Call (626) 579-9541
                 </Button>
-                <Button className="btn-outline-custom" href="#location">
-                  <FaRoute className="me-2" /> View Directions
+                <Button className="btn-outline-clean" href="#location">
+                  <FaRoute className="me-2" /> View Location
                 </Button>
               </div>
             </Col>
 
             <Col lg={6}>
-              <div className="position-relative">
-                <Card className="border-0 shadow-lg overflow-hidden rounded-4">
-                  <img
-                    src="/exterior.jpg"
-                    alt="Aurora Medical Center - El Monte, CA Building Exterior"
-                    className="img-fluid"
-                    style={{ height: "420px", objectFit: "cover" }}
-                    loading="eager"
-                  />
-                </Card>
-
-                {/* Floating Badge */}
-                <div
-                  className="position-absolute bottom-0 start-0 m-4 bg-white p-3 rounded-3 shadow-lg border d-none d-sm-flex align-items-center gap-3"
-                  style={{ zIndex: 2, maxWidth: "280px" }}
-                >
-                  <div className="bg-success bg-opacity-10 text-success rounded-circle p-2 d-flex align-items-center justify-content-center">
-                    <FaUserCheck size={20} />
-                  </div>
-                  <div>
-                    <div className="fw-bold text-dark" style={{ fontSize: "14px" }}>Accepting New Patients</div>
-                    <small className="text-muted" style={{ fontSize: "12px" }}>Walk-ins & Appointments</small>
-                  </div>
-                </div>
-              </div>
+              <Card className="border-0 shadow-sm overflow-hidden rounded-3">
+                <img
+                  src="/exterior.jpg"
+                  alt="Aurora Medical Center Building Exterior in El Monte, CA"
+                  className="img-fluid"
+                  style={{ height: "380px", objectFit: "cover" }}
+                  loading="eager"
+                />
+              </Card>
             </Col>
-          </Row>
-        </Container>
-      </section>
-
-      {/* Trust Badges Bar */}
-      <section className="py-4 bg-white border-bottom border-top">
-        <Container>
-          <Row className="g-3 text-center">
-            {trustBadges.map((b, idx) => (
-              <Col key={idx} xs={6} md={3}>
-                <div className="p-2">
-                  <div className="fw-bold text-dark" style={{ fontSize: "15px" }}>{b.title}</div>
-                  <div className="text-muted small">{b.subtitle}</div>
-                </div>
-              </Col>
-            ))}
           </Row>
         </Container>
       </section>
@@ -229,25 +167,17 @@ export const Home: React.FC = () => {
       {/* Services Section */}
       <section className="py-5" id="services">
         <Container>
-          <div className="text-center max-width-600 mx-auto mb-5">
-            <span className="stat-pill mb-2">Our Healthcare Services</span>
-            <h2 className="section-title mb-2">Comprehensive Primary Care</h2>
-            <p className="section-subtitle">
-              We offer personalized medical care focused on prevention, wellness, and treatment for your entire family.
-            </p>
+          <div className="mb-4">
+            <h2 className="fw-bold text-dark mb-1">Our Services</h2>
+            <p className="text-muted">Comprehensive primary and preventive healthcare for all ages.</p>
           </div>
 
-          <Row className="g-4 mb-4">
+          <Row className="g-3 mb-4">
             {services.map((item, idx) => (
               <Col md={6} lg={4} key={idx}>
-                <Card className="premium-card h-100 p-3">
-                  <Card.Body className="d-flex flex-column">
-                    <div
-                      className="service-icon-box mb-3"
-                      style={{ backgroundColor: item.bg, color: item.color }}
-                    >
-                      <item.icon />
-                    </div>
+                <Card className="clean-card h-100 p-3">
+                  <Card.Body>
+                    <item.icon className={`${item.color} mb-3`} size={28} />
                     <h5 className="fw-bold text-dark mb-2">{item.title}</h5>
                     <p className="text-muted small mb-0">{item.desc}</p>
                   </Card.Body>
@@ -257,48 +187,40 @@ export const Home: React.FC = () => {
           </Row>
 
           {/* Insurance Banner */}
-          <Card className="premium-card border-0 bg-primary text-white p-4">
-            <Card.Body className="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+          <Card className="clean-card border-0 bg-primary text-white p-4">
+            <Card.Body className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
               <div className="d-flex align-items-center gap-3">
-                <div
-                  className="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm"
-                  style={{ width: "56px", height: "56px" }}
-                >
-                  <FaHospital size={26} />
-                </div>
+                <FaHospital size={32} />
                 <div>
                   <h5 className="fw-bold mb-1">Insurance & Payment Options Accepted</h5>
-                  <p className="mb-0 text-white-80 small">
+                  <p className="mb-0 text-white-75 small">
                     We accept Medi-Cal, Medicare, PPO, HMO, Covered California plans, and self-pay cash options.
                   </p>
                 </div>
               </div>
-              <Button variant="light" href="tel:+16265799541" className="fw-bold text-primary px-4 flex-shrink-0 shadow-sm">
-                Verify Insurance
+              <Button variant="light" href="tel:+16265799541" className="fw-bold text-primary px-4 flex-shrink-0">
+                Call to Verify
               </Button>
             </Card.Body>
           </Card>
         </Container>
       </section>
 
-      {/* Hours & Dynamic Announcements Grid */}
-      <section className="py-5 bg-white border-top border-bottom">
+      {/* Hours & Dynamic Announcements */}
+      <section className="py-5 bg-light border-top border-bottom">
         <Container>
           <Row className="g-4">
             <Col lg={7}>
-              <Card className="premium-card p-4 h-100">
+              <Card className="clean-card p-4 h-100">
                 <Card.Body>
                   <h4 className="fw-bold text-dark mb-3">Weekly Hours of Operation</h4>
-                  <p className="text-muted small mb-4">
-                    Our clinic provides flexible appointment slots and walk-in availability.
-                  </p>
                   <div className="table-responsive">
                     <table className="table table-hover align-middle mb-0">
                       <thead>
                         <tr>
-                          <th className="text-uppercase text-muted small">Day</th>
-                          <th className="text-uppercase text-muted small">Clinic Hours</th>
-                          <th className="text-uppercase text-muted small text-end">Status</th>
+                          <th className="text-muted small">Day</th>
+                          <th className="text-muted small">Hours</th>
+                          <th className="text-muted small text-end">Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -313,7 +235,7 @@ export const Home: React.FC = () => {
                               </td>
                               <td>{hours}</td>
                               <td className="text-end">
-                                <Badge bg={isClosed ? "secondary" : "success"} pill>
+                                <Badge bg={isClosed ? "secondary" : "success"}>
                                   {isClosed ? "Closed" : "Open"}
                                 </Badge>
                               </td>
@@ -328,16 +250,15 @@ export const Home: React.FC = () => {
             </Col>
 
             <Col lg={5}>
-              <Card className="premium-card p-4 h-100 bg-light">
+              <Card className="clean-card p-4 h-100">
                 <Card.Body>
-                  <h4 className="fw-bold text-dark mb-3">Clinic Announcements</h4>
+                  <h4 className="fw-bold text-dark mb-3">Announcements</h4>
                   {announcements.map((item, idx) => (
-                    <div className="bg-white p-3 rounded-3 border mb-3" key={idx}>
-                      <div className="d-flex align-items-center justify-content-between mb-2">
-                        <Badge bg="info">{item.badge}</Badge>
-                        {item.date && <small className="text-muted">{item.date}</small>}
+                    <div className="border-bottom pb-3 mb-3 last-no-border" key={idx}>
+                      <div className="d-flex align-items-center justify-content-between mb-1">
+                        <strong className="text-dark small">{item.title}</strong>
+                        <Badge bg="light" text="dark" className="border">{item.badge}</Badge>
                       </div>
-                      <strong className="text-dark small d-block mb-1">{item.title}</strong>
                       <p className="text-muted small mb-0">{item.content}</p>
                     </div>
                   ))}
@@ -353,53 +274,43 @@ export const Home: React.FC = () => {
         <Container>
           <Row className="align-items-center g-4">
             <Col lg={5}>
-              <div className="pe-lg-3">
-                <span className="badge bg-primary px-3 py-2 rounded-pill fw-semibold mb-3">
-                  LOCATION & CONTACT
-                </span>
-                <h2 className="display-6 fw-bold mb-4">Visit Our Clinic</h2>
+              <h2 className="fw-bold mb-4">Visit Our Clinic</h2>
 
-                <div className="d-flex mb-4">
-                  <div
-                    className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0"
-                    style={{ width: "48px", height: "48px" }}
-                  >
-                    <FaLocationDot size={20} />
-                  </div>
-                  <div>
-                    <h5 className="fw-bold mb-1">Aurora Medical Center</h5>
-                    <p className="text-white-50 mb-0">
-                      11245 Lower Azusa Rd # A<br />
-                      El Monte, CA 91731
-                    </p>
-                  </div>
+              <div className="d-flex mb-4">
+                <FaLocationDot className="text-primary me-3 mt-1" size={20} />
+                <div>
+                  <h5 className="fw-bold mb-1">Aurora Medical Center</h5>
+                  <p className="text-white-50 mb-0">
+                    11245 Lower Azusa Rd # A<br />
+                    El Monte, CA 91731
+                  </p>
                 </div>
-
-                <div className="d-flex flex-column gap-3 mb-4 text-white-50">
-                  <div className="d-flex align-items-center">
-                    <FaPhone className="text-primary me-3" size={18} />
-                    <a href="tel:+16265799541" className="text-white text-decoration-none fw-semibold">
-                      Phone: (626) 579-9541
-                    </a>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <FaFax className="text-primary me-3" size={18} />
-                    <span>Fax: (626) 313-2012</span>
-                  </div>
-                </div>
-
-                <Button
-                  className="btn-primary-custom w-100 d-flex align-items-center justify-content-center gap-2 py-3"
-                  href="https://www.google.com/maps/dir//11245+Lower+Azusa+Rd+A,+El+Monte,+CA+91731"
-                  target="_blank"
-                >
-                  <FaRoute /> Get Google Maps Directions
-                </Button>
               </div>
+
+              <div className="d-flex flex-column gap-2 mb-4 text-white-50">
+                <div className="d-flex align-items-center">
+                  <FaPhone className="text-primary me-3" size={16} />
+                  <a href="tel:+16265799541" className="text-white text-decoration-none fw-semibold">
+                    Phone: (626) 579-9541
+                  </a>
+                </div>
+                <div className="d-flex align-items-center">
+                  <FaFax className="text-primary me-3" size={16} />
+                  <span>Fax: (626) 313-2012</span>
+                </div>
+              </div>
+
+              <Button
+                className="btn-primary-clean w-100 d-flex align-items-center justify-content-center gap-2"
+                href="https://www.google.com/maps/dir//11245+Lower+Azusa+Rd+A,+El+Monte,+CA+91731"
+                target="_blank"
+              >
+                <FaRoute /> Get Google Maps Directions
+              </Button>
             </Col>
 
             <Col lg={7}>
-              <div className="ratio ratio-21x9 rounded-4 shadow-lg overflow-hidden border border-secondary">
+              <div className="ratio ratio-21x9 rounded shadow overflow-hidden border border-secondary">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.6067527653246!2d-118.0415392235472!3d34.07955511627883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2d708bd6d3893%3A0x6266205737527776!2s11245%20Lower%20Azusa%20Rd%20A%2C%20El%20Monte%2C%20CA%2091731!5e0!3m2!1sen!2sus!4v1701234567890!5m2!1sen!2sus"
                   width="100%"

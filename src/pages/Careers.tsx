@@ -7,39 +7,31 @@ export const Careers: React.FC = () => {
   const { careers } = useContent();
 
   return (
-    <div className="careers-page py-5">
+    <div className="py-5">
       <Container>
-        <div className="text-center max-width-600 mx-auto mb-5">
-          <span className="stat-pill mb-2">CAREER OPPORTUNITIES</span>
-          <h1 className="section-title display-5 mb-3">Join Our Healthcare Team</h1>
-          <p className="section-subtitle">
-            We are looking to hire dedicated healthcare professionals to join Aurora Medical Center in El Monte, CA.
+        <div className="mb-5 text-center">
+          <h1 className="fw-bold text-dark mb-2">Join Our Team</h1>
+          <p className="text-muted">
+            Healthcare career opportunities at Aurora Medical Center in El Monte, CA.
           </p>
         </div>
 
         <Row className="g-4 mb-5">
           {careers.map((job, idx) => (
             <Col md={4} key={idx}>
-              <Card className="premium-card h-100 p-4 text-center">
-                <Card.Body className="d-flex flex-column align-items-center">
-                  <div
-                    className="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                    style={{ width: "72px", height: "72px", backgroundColor: "#eff6ff", color: "#2563eb" }}
-                  >
-                    <FaUserDoctor size={32} />
-                  </div>
+              <Card className="clean-card h-100 p-4">
+                <Card.Body className="d-flex flex-column align-items-start">
+                  <FaUserDoctor size={28} className="text-primary mb-3" />
                   <h4 className="fw-bold text-dark mb-3">{job.title}</h4>
-                  <div className="d-flex flex-wrap justify-content-center gap-1 mb-3">
+                  <div className="d-flex flex-wrap gap-1 mb-3">
                     {job.specialties.map((spec, sIdx) => (
-                      <Badge bg="light" text="dark" className="border px-2 py-1" key={sIdx} style={{ fontSize: "12px" }}>
+                      <Badge bg="light" text="dark" className="border" key={sIdx}>
                         {spec}
                       </Badge>
                     ))}
                   </div>
                   <div className="mt-auto">
-                    <Badge bg="success" className="px-3 py-2 rounded-pill fw-semibold">
-                      {job.positions}
-                    </Badge>
+                    <small className="text-success fw-semibold">{job.positions}</small>
                   </div>
                 </Card.Body>
               </Card>
@@ -49,29 +41,27 @@ export const Careers: React.FC = () => {
 
         <Row>
           <Col lg={8} className="mx-auto">
-            <Card className="premium-card border-0 bg-primary text-white p-4 p-md-5 text-center shadow-lg">
+            <Card className="clean-card bg-light p-4 text-center">
               <Card.Body>
-                <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex p-3 mb-3">
-                  <FaEnvelope size={36} className="text-white" />
-                </div>
-                <h3 className="fw-bold mb-3">How to Apply</h3>
-                <p className="mb-4 text-white-80">
-                  Interested candidates are invited to submit their CV, resume, and cover letter directly to our Office Manager & Care Coordinator:
+                <FaEnvelope size={32} className="text-primary mb-3" />
+                <h4 className="fw-bold mb-2">How to Apply</h4>
+                <p className="text-muted mb-4">
+                  Please submit your CV and cover letter to our Office Manager & Care Coordinator:
                 </p>
 
-                <div className="bg-white bg-opacity-10 rounded-3 p-3 mb-4 text-center border border-white border-opacity-25">
-                  <div className="fw-bold fs-5">Julia Wang</div>
-                  <small className="text-white-75">Office Manager & Care Coordinator</small>
+                <div className="bg-white p-3 rounded border d-inline-block mb-4 text-start">
+                  <div className="fw-bold text-dark">Julia Wang</div>
+                  <small className="text-muted">Office Manager & Care Coordinator</small>
                 </div>
 
-                <Button
-                  variant="light"
-                  size="lg"
-                  href="mailto:julia.wang.amc@gmail.com?subject=Job Application - Aurora Medical Center"
-                  className="px-4 py-3 fw-bold text-primary shadow-sm d-inline-flex align-items-center gap-2"
-                >
-                  <FaEnvelope /> Email Julia: julia.wang.amc@gmail.com
-                </Button>
+                <div>
+                  <Button
+                    className="btn-primary-clean px-4 py-2"
+                    href="mailto:julia.wang.amc@gmail.com?subject=Job Application - Aurora Medical Center"
+                  >
+                    <FaEnvelope className="me-2" /> julia.wang.amc@gmail.com
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>

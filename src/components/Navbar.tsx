@@ -36,14 +36,14 @@ export const Navbar: React.FC = () => {
           <img
             src="/logo1.svg"
             alt="Aurora Medical Center"
-            height="40"
+            height="38"
             className="me-2"
           />
           <div className="d-flex flex-column">
-            <span className="fw-bold fs-5 text-dark lh-1" style={{ letterSpacing: "-0.02em" }}>
-              Aurora <span className="text-primary fw-extrabold">Medical</span>
+            <span className="fw-bold fs-5 text-dark lh-1">
+              Aurora Medical Center
             </span>
-            <small className="text-muted" style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            <small className="text-muted" style={{ fontSize: "11px" }}>
               El Monte, CA
             </small>
           </div>
@@ -56,57 +56,45 @@ export const Navbar: React.FC = () => {
             <Nav.Link
               as={Link}
               to="/"
-              className={`px-3 py-2 fw-semibold rounded-pill ${
-                location.pathname === "/" ? "bg-primary text-white" : "text-secondary"
-              }`}
+              className={`nav-link-custom ${location.pathname === "/" ? "active fw-bold" : ""}`}
             >
               Home
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/about"
-              className={`px-3 py-2 fw-semibold rounded-pill ${
-                location.pathname === "/about" ? "bg-primary text-white" : "text-secondary"
-              }`}
+              className={`nav-link-custom ${location.pathname === "/about" ? "active fw-bold" : ""}`}
             >
               About Us
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/careers"
-              className={`px-3 py-2 fw-semibold rounded-pill ${
-                location.pathname === "/careers" ? "bg-primary text-white" : "text-secondary"
-              }`}
+              className={`nav-link-custom ${location.pathname === "/careers" ? "active fw-bold" : ""}`}
             >
               Careers
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/news"
-              className={`px-3 py-2 fw-semibold rounded-pill ${
-                location.pathname === "/news" ? "bg-primary text-white" : "text-secondary"
-              }`}
+              className={`nav-link-custom ${location.pathname === "/news" ? "active fw-bold" : ""}`}
             >
               News
             </Nav.Link>
           </Nav>
 
           <div className="d-flex flex-wrap align-items-center gap-3 mt-2 mt-lg-0">
-            {/* Hours / Notice Badge Pill */}
-            <div className="d-flex align-items-center bg-light border rounded-pill px-3 py-1 shadow-sm">
+            {/* Hours Badge */}
+            <div className="d-flex align-items-center bg-light border rounded px-3 py-1">
               {isSpecial ? (
-                <FaCalendarDay className="text-warning me-2" size={14} />
+                <FaCalendarDay className="text-warning me-2" size={13} />
               ) : (
-                <FaClock className="text-primary me-2" size={14} />
+                <FaClock className="text-primary me-2" size={13} />
               )}
-              <div className="small fw-semibold text-dark me-2" style={{ fontSize: "12.5px" }}>
+              <span className="small me-2" style={{ fontSize: "13px" }}>
                 {displayMessage}
-              </div>
-              <Badge
-                bg={displayHours.toLowerCase().includes("closed") ? "danger" : "success"}
-                className="rounded-pill px-2 py-1"
-                style={{ fontSize: "11px" }}
-              >
+              </span>
+              <Badge bg={displayHours.toLowerCase().includes("closed") ? "secondary" : "primary"}>
                 {displayHours}
               </Badge>
             </div>
