@@ -12,7 +12,6 @@ import {
   FaFax,
   FaLocationDot,
   FaRoute,
-  FaTree,
   FaUserDoctor,
 } from 'react-icons/fa6';
 import { useContent } from '../context/ContentContext';
@@ -94,9 +93,8 @@ export const Home: React.FC = () => {
       {holiday.active && (
         <div className="bg-warning bg-opacity-10 border-bottom border-warning py-2 text-center">
           <Container>
-            <div className="d-flex justify-content-center align-items-center gap-2 small">
-              <FaTree className="text-warning" />
-              <strong>{holiday.title}:</strong> {holiday.message} <span>({holiday.hours})</span>
+            <div className="small">
+              <strong>{holiday.title}:</strong> {holiday.message}
             </div>
           </Container>
         </div>
@@ -255,10 +253,7 @@ export const Home: React.FC = () => {
                   <h4 className="fw-bold text-dark mb-3">Announcements</h4>
                   {announcements.map((item, idx) => (
                     <div className="border-bottom pb-3 mb-3 last-no-border" key={idx}>
-                      <div className="d-flex align-items-center justify-content-between mb-1">
-                        <strong className="text-dark small">{item.title}</strong>
-                        <Badge bg="light" text="dark" className="border">{item.badge}</Badge>
-                      </div>
+                      <strong className="text-dark small d-block mb-1">{item.title}</strong>
                       <p className="text-muted small mb-0">{item.content}</p>
                     </div>
                   ))}

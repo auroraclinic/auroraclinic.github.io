@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useContent } from '../context/ContentContext';
 
 export const News: React.FC = () => {
@@ -20,14 +20,9 @@ export const News: React.FC = () => {
             {holiday.active && (
               <Card className="clean-card p-4 mb-4 border-warning">
                 <Card.Body>
-                  <div className="d-flex align-items-center justify-content-between mb-2">
-                    <Badge bg="warning" text="dark">
-                      {holiday.badge || "Notice"}
-                    </Badge>
-                  </div>
                   <h4 className="fw-bold text-dark mb-2">{holiday.title}</h4>
                   <p className="text-muted mb-0">
-                    {holiday.message} <strong>{holiday.hours}</strong>
+                    {holiday.message}
                   </p>
                 </Card.Body>
               </Card>
@@ -36,12 +31,11 @@ export const News: React.FC = () => {
             {announcements.map((item, idx) => (
               <Card className="clean-card p-4 mb-4" key={idx}>
                 <Card.Body>
-                  <div className="d-flex align-items-center justify-content-between mb-2">
-                    <Badge bg="light" text="dark" className="border">
-                      {item.badge}
-                    </Badge>
-                    {item.date && <small className="text-muted">{item.date}</small>}
-                  </div>
+                  {item.date && (
+                    <div className="mb-2">
+                      <small className="text-muted">{item.date}</small>
+                    </div>
+                  )}
                   <h4 className="fw-bold text-dark mb-2">{item.title}</h4>
                   <p className="text-muted mb-0">
                     {item.content}
